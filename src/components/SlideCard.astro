@@ -1,0 +1,240 @@
+---
+import type { Slide } from "../lib/slides";
+import { en } from "../lib/i18n";
+
+export interface Props {
+  slide: Slide;
+  index: number;
+}
+
+const { slide, index } = Astro.props;
+const trackPlayUrl = (t: { title: string; youtubeId: string | null }) =>
+  t.youtubeId
+    ? `https://www.youtube.com/watch?v=${t.youtubeId}`
+    : `https://www.youtube.com/results?search_query=${encodeURIComponent("岡村孝子 " + t.title)}`;
+---
+
+<article class="slide">
+  <div class="slide-top">
+    <p class="kicker">
+      <span class={`pill ${slide.kind}`}>{slide.kind === "single" ? "Single" : "Album"}</span>
+      <span>Slide {index + 1}</span>
+      <span aria-hidden="true">·</span>
+      <span>{slide.year}</span>
+    </p>
+    <h2 class="title">{en(slide.title)}</h2>
+    <p class="sub">{slide.subtitle} · {slide.date}</p>
+    {slide.era && <p class="era">{en(slide.era)}</p>}
+  </div>
+
+  <dl class="facts">
+    <div>
+      <dt>Release</dt>
+      <dd>{slide.date}</dd>
+    </div>
+    <div>
+      <dt>Oricon</dt>
+      <dd>{slide.oricon ? `${slide.oricon}位` : "—"}</dd>
+    </div>
+    <div>
+      <dt>Sample</dt>
+      <dd>{slide.youtubeId ? "Ready ▶" : "Search"}</dd>
+    </div>
+    {slide.coupling && (
+      <div>
+        <dt>c/w</dt>
+        <dd>{en(slide.coupling)}</dd>
+      </div>
+    )}
+    {slide.tieup && (
+      <div class="wide">
+        <dt>Tie-up</dt>
+        <dd>{en(slide.tieup)}</dd>
+      </div>
+    )}
+  </dl>
+
+  <div class="play-row">
+    {slide.youtubeId ? (
+      <button
+        type="button"
+        class="btn play"
+        data-play={slide.youtubeId}
+        data-title={slide.title}
+        data-start={slide.chorusStart ?? ""}
+      >
+        ▶ Play
+      </button>
+      <a class="btn ghost" href={slide.watchUrl} target="_blank" rel="noopener">
+        Open ↗
+      </a>
+    ) : (
+      <a class="btn ghost" href={slide.watchUrl} target="_blank" rel="noopener">
+        Search YouTube ↗
+      </a>
+    )}
+    <span class="play-note">Video plays in the cover frame ←</span>
+  </div>
+
+  {slide.kind === "album" && slide.tracks.length > 0 && (
+    <ol class="tracks">
+      {slide.tracks.map((t) => (
+        <li class={t.youtubeId ? "has-video" : ""}>
+          <span class="no">{t.no}</span>
+          <span class="t">{en(t.title)}</span>
+          {t.youtubeId ? (
+            <button
+              type="button"
+              class="mini"
+              data-play={t.youtubeId}
+              data-title={t.title}
+              data-start={t.chorusStart ?? ""}
+            >
+              ▶
+            </button>
+          ) : (
+            <a class="mini" href={trackPlayUrl(t)} target="_blank" rel="noopener" title="Search on YouTube">
+              ↗
+            </a>
+          )}
+        </li>
+      ))}
+    </ol>
+  )}
+</article>
+
+<style>
+  .slide {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    background: linear-gradient(180deg, hsl(var(--hue) 45% 32% / 0.34), hsl(var(--hue) 40% 14% / 0.12));
+    border: 1px solid hsl(var(--hue) 65% 62% / 0.42);
+    border-radius: 18px;
+    padding: clamp(14px, 2vw, 26px);
+    box-shadow: 0 24px 70px -34px hsl(var(--hue) 92% 52% / 0.8);
+  }
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .pill.single { background: linear-gradient(120deg, #ff4d6d, #f45d9c); border-color: transparent; color: #fff; }
+  .pill.album { background: linear-gradient(120deg, #ff9d2e, #ffd23a); border-color: transparent; color: #3a2400; }
+  .title {
+    font-family: "Noto Serif JP", serif;
+    font-size: clamp(26px, 3.4vw, 46px);
+    line-height: 1.12;
+    margin: 6px 0 2px;
+    letter-spacing: 0.01em;
+    background: linear-gradient(100deg, #fff, hsl(var(--hue) 90% 82%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    width: fit-content;
+  }
+  .sub { margin: 0; color: var(--muted); font-size: 14px; }
+  .era { margin: 4px 0 0; color: hsl(var(--hue) 90% 74%); font-weight: 700; font-size: 13px; }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+  }
+  .facts > div {
+    background: linear-gradient(180deg, hsl(var(--hue) 55% 40% / 0.3), rgb(0 0 0 / 0.32));
+    border: 1px solid hsl(var(--hue) 70% 66% / 0.4);
+    border-radius: 12px;
+    padding: 8px 10px;
+    min-width: 0;
+  }
+  .facts .wide { grid-column: 1 / -1; }
+  .facts dt { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .facts dd { margin: 2px 0 0; font-weight: 700; font-size: 13px; color: hsl(var(--hue) 85% 84%); overflow: hidden; text-overflow: ellipsis; }
+  .facts .wide dd { white-space: normal; }
+  .play-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    font: inherit;
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 999px;
+    padding: 9px 22px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn.play {
+    background: linear-gradient(120deg, hsl(var(--hue) 90% 58%), hsl(calc(var(--hue) + 50) 88% 54%));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 14px 34px -14px hsl(var(--hue) 95% 55% / 0.95);
+  }
+  .btn.play:hover { filter: brightness(1.12); }
+  .btn.ghost { background: rgb(0 0 0 / 0.25); color: var(--ink); border-color: hsl(var(--hue) 60% 62% / 0.5); }
+  .btn.ghost:hover { border-color: hsl(var(--hue) 90% 68%); background: hsl(var(--hue) 70% 40% / 0.35); }
+  .play-note { font-size: 12px; color: var(--muted); }
+  .tracks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 5px;
+    overflow-y: auto;
+    min-height: 0;
+    flex: 1 1 auto;
+    padding-right: 2px;
+  }
+  .tracks li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border: 1px dashed var(--line);
+    border-left: 3px solid var(--track-tint, hsl(var(--hue) 82% 62%));
+    border-radius: 10px;
+    font-size: 13px;
+    background: linear-gradient(90deg, hsl(var(--hue) 60% 40% / 0.16), rgb(0 0 0 / 0.22));
+  }
+  .tracks li:nth-child(5n + 2) { --track-tint: #ff5c7a; }
+  .tracks li:nth-child(5n + 3) { --track-tint: #ffb03a; }
+  .tracks li:nth-child(5n + 4) { --track-tint: #34d8b4; }
+  .tracks li:nth-child(5n + 5) { --track-tint: #7c8cff; }
+  .tracks li.has-video { border-style: solid; }
+  .tracks .no { color: var(--track-tint, var(--muted)); font-weight: 800; font-size: 12px; min-width: 22px; }
+  .tracks .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tracks .mini {
+    flex: 0 0 auto;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid hsl(var(--hue) 60% 62% / 0.5);
+    border-radius: 999px;
+    padding: 3px 12px;
+    cursor: pointer;
+  }
+  .tracks .mini:hover { border-color: hsl(var(--hue) 90% 68%); background: hsl(var(--hue) 75% 45% / 0.5); }
+  button.mini { font-family: inherit; }
+  @media (max-width: 640px) {
+    .facts { grid-template-columns: 1fr 1fr; }
+    .play-note { display: none; }
+  }
+</style>

@@ -1,0 +1,322 @@
+---
+import Base from "../layouts/Base.astro";
+import Cover from "../components/Cover.astro";
+import SlideCard from "../components/SlideCard.astro";
+import discography from "../data/discography.json";
+import { buildSlides, formatTime } from "../lib/slides";
+import type { DiscogYear } from "../lib/slides";
+import { en } from "../lib/i18n";
+
+const { count, slides } = buildSlides((discography as { years: DiscogYear[] }).years);
+---
+
+<Base>
+  <div class="deck" data-deck>
+    <header class="topbar">
+      <p class="brand">
+        {en("岡村孝子")} <span>Complete Discography · {count} slides · 1985–2019</span>
+      </p>
+      <div class="top-controls" role="toolbar" aria-label="Presentation controls">
+        <div class="nav">
+          <button type="button" data-prev>← Prev</button>
+          <span class="counter" data-counter aria-live="polite">1 / {count}</span>
+          <button type="button" data-next>Next →</button>
+        </div>
+        <label class="jump">
+          <span>Slide</span>
+          <select data-index aria-label="Jump to slide">
+            {slides.map((s, i) => (
+              <option value={i}>
+                {i + 1}. {s.year} · {en(s.title)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div class="modes">
+          <button type="button" data-present>Present ⛶</button>
+          <button type="button" data-autoplay aria-pressed="false">
+            <span data-autoplay-label>Auto 8s: off</span>
+          </button>
+          <button
+            type="button"
+            data-chorus-toggle
+            aria-pressed="false"
+            title="Start every sample at the song's chorus instead of the intro (C)"
+          >
+            <span data-chorus-state>From chorus: off</span>
+          </button>
+          <a class="open-current" data-open-current href="#" target="_blank" rel="noopener">
+            Open sample ↗
+          </a>
+        </div>
+      </div>
+      <div class="bar" aria-hidden="true"><span data-progress></span></div>
+    </header>
+
+    <main class="stage" data-stage aria-live="polite">
+      {slides.map((slide, i) => (
+        <section
+          class:list={["frame", { active: i === 0 }]}
+          data-frame
+          data-slide={slide.id}
+          data-title={slide.title}
+          data-hue={slide.coverHue}
+          style={`--hue:${slide.coverHue}`}
+          data-youtube={slide.youtubeId ?? ""}
+          data-watch={slide.watchUrl}
+          data-chorus={slide.chorusStart ?? ""}
+          data-chorus-label={slide.chorusStart ? formatTime(slide.chorusStart) : ""}
+          aria-label={`Slide ${i + 1} of ${count}: ${slide.title}`}
+          aria-hidden={i === 0 ? "false" : "true"}
+        >
+          <div class="slide-layout">
+            <div class="media">
+              <div class="media-box" data-cover-wrap>
+                <Cover slide={slide} />
+              </div>
+              <p class="media-hint" data-play-note>
+                {slide.youtubeId
+                  ? "Press Play — the video appears here, in place of the cover."
+                  : "No curated video — use “Open sample” to search YouTube."}
+              </p>
+            </div>
+            <div class="details">
+              <SlideCard slide={slide} index={i} />
+            </div>
+          </div>
+        </section>
+      ))}
+    </main>
+  </div>
+
+  <script>
+    import { initDeck } from "../scripts/deck.ts";
+    initDeck();
+  </script>
+</Base>
+
+<style>
+  .deck {
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0 clamp(10px, 1.6vw, 22px) 10px;
+  }
+  .topbar {
+    flex: 0 0 auto;
+    padding-top: clamp(8px, 1.2vh, 14px);
+    display: grid;
+    gap: 7px;
+  }
+  .brand {
+    margin: 0;
+    font-family: "Noto Serif JP", serif;
+    font-weight: 900;
+    font-size: clamp(20px, 2.1vw, 32px);
+    letter-spacing: 0.02em;
+    background: linear-gradient(100deg, #ff5c7a, #ffb03a 34%, #34d8b4 66%, #7c8cff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    width: fit-content;
+  }
+  .brand span {
+    font-family: "Noto Sans JP", system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    -webkit-text-fill-color: var(--muted);
+  }
+  .top-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: linear-gradient(180deg, rgb(48 38 58 / 0.92), rgb(20 17 20 / 0.94));
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 8px 12px;
+    box-shadow: 0 0 0 1px hsl(var(--hue) 70% 60% / 0.25), 0 14px 40px -20px hsl(var(--hue) 90% 55% / 0.6);
+  }
+  .nav { display: flex; align-items: center; gap: 10px; }
+  .nav button,
+  .modes button {
+    font: inherit;
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 999px;
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    background: #2b242e;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .nav button:not(:disabled):hover,
+  .modes button:hover {
+    border-color: hsl(var(--hue) 90% 68% / 0.9);
+    background: linear-gradient(180deg, hsl(var(--hue) 70% 30%), hsl(var(--hue) 70% 20%));
+  }
+  .nav button:disabled { opacity: 0.35; cursor: default; }
+  .counter {
+    font-variant-numeric: tabular-nums;
+    font-weight: 900;
+    min-width: 84px;
+    text-align: center;
+    font-size: 15px;
+    color: hsl(var(--hue) 85% 74%);
+  }
+  .jump { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+  .jump select {
+    font: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    background: linear-gradient(180deg, hsl(var(--hue) 30% 24%), #241f29);
+    border: 1px solid hsl(var(--hue) 55% 60% / 0.45);
+    border-radius: 10px;
+    padding: 7px 10px;
+    max-width: min(52vw, 320px);
+  }
+  .modes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-left: auto; }
+  .modes [data-autoplay][aria-pressed="true"],
+  .modes [data-chorus-toggle][aria-pressed="true"] {
+    background: linear-gradient(120deg, #34d8b4, #7c8cff);
+    border-color: transparent;
+    color: #14202a;
+  }
+  .modes [data-chorus-toggle][aria-pressed="false"] {
+    border-color: hsl(var(--hue) 55% 62% / 0.5);
+  }
+  .open-current {
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    border: 1px solid hsl(var(--hue) 55% 62% / 0.5);
+    border-radius: 999px;
+    padding: 8px 14px;
+  }
+  .open-current:hover {
+    border-color: hsl(var(--hue) 90% 70%);
+    background: linear-gradient(120deg, hsl(var(--hue) 85% 55%), hsl(calc(var(--hue) + 60) 85% 55%));
+    color: #fff;
+  }
+  .bar { height: 5px; border-radius: 999px; background: #2e2831; overflow: hidden; }
+  .bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #ff5c7a, #ffb03a, #34d8b4, #7c8cff, #f45d9c);
+    box-shadow: 0 0 14px hsl(var(--hue) 90% 60% / 0.8);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+
+  .stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  .frame {
+    position: absolute;
+    inset: 0;
+    display: none;
+    min-height: 0;
+    border-radius: 22px;
+    background:
+      radial-gradient(65% 60% at 16% 20%, hsl(var(--hue) 92% 52% / 0.22), transparent 68%),
+      radial-gradient(62% 58% at 94% 82%, hsl(calc(var(--hue) + 55) 88% 52% / 0.2), transparent 70%),
+      radial-gradient(80% 70% at 48% 118%, hsl(calc(var(--hue) - 65) 85% 55% / 0.18), transparent 72%);
+  }
+  .frame.active { display: block; }
+  .slide-layout {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    gap: clamp(14px, 2.5vw, 28px);
+    align-items: stretch;
+  }
+  .media {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+  .media-box {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid hsl(var(--hue) 80% 65% / 0.5);
+    box-shadow: 0 34px 90px -34px hsl(var(--hue) 92% 55% / 0.85);
+  }
+  .media-box :global(.cover) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 16px;
+  }
+  .media-box :global(.player),
+  .media-box :global(.player iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .media-box :global(.stop-btn) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 999px;
+    padding: 6px 12px;
+    border: 1px solid rgb(255 255 255 / 0.4);
+    background: rgb(0 0 0 / 0.72);
+    color: #fff;
+    cursor: pointer;
+  }
+  .media-hint { margin: 0; font-size: 12px; color: var(--muted); }
+  .details {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: 4px;
+  }
+  .details :global(.slide) { margin: 0; }
+
+  :fullscreen.deck,
+  .deck:fullscreen {
+    max-width: none;
+    padding: clamp(12px, 2vw, 28px) clamp(16px, 3vw, 44px) clamp(14px, 2vh, 26px);
+    background:
+      radial-gradient(1200px 700px at 12% 0%, hsl(var(--hue) 75% 26%), transparent 62%),
+      radial-gradient(1000px 700px at 95% 100%, hsl(calc(var(--hue) + 130) 70% 24%), transparent 60%),
+      #141114;
+  }
+
+  @media (max-width: 900px) {
+    .slide-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 10px;
+      height: 100%;
+    }
+    .media { justify-content: start; }
+    .media-box { aspect-ratio: 16 / 9; flex: 0 0 auto; }
+    .modes { margin-left: 0; }
+  }
+</style>

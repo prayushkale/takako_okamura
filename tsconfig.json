@@ -1,0 +1,6 @@
+{
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "es2022"]
+  }
+}

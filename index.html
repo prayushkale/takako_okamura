@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Takako Okamura (岡村孝子) solo discography 1985–2019, year by year. Browse singles and albums slide by slide and play songs via YouTube.">
+<title>岡村孝子 Takako Okamura — Year by Year Discography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">
+    <h1>岡村孝子 <span>Takako Okamura</span></h1>
+    <p class="tagline">Solo discography 1985–2019 · year by year, slide by slide</p>
+  </div>
+  <nav class="year-nav" aria-label="Year navigation">
+    <button id="prevYear" type="button">← Prev</button>
+    <select id="yearSelect" aria-label="Jump to year"></select>
+    <button id="nextYear" type="button">Next →</button>
+  </nav>
+</header>
+
+<div class="timeline" id="timeline" role="tablist" aria-label="Timeline"></div>
+
+<main id="slide" aria-live="polite"></main>
+
+<p class="progress" id="progress"></p>
+
+<section class="player" id="player" hidden aria-label="Now playing">
+  <div class="player-main">
+    <div class="yt-wrap"><div id="yt-slot"></div></div>
+    <div class="np">
+      <div class="np-title" id="np-title"></div>
+      <div class="np-sub" id="np-sub"></div>
+      <div class="np-controls">
+        <button id="np-prev" type="button">◀ Prev</button>
+        <button id="np-next" type="button">Next ▶</button>
+        <span id="np-count"></span>
+        <button id="np-close" type="button">✕ Close</button>
+      </div>
+    </div>
+  </div>
+  <ol class="np-queue" id="np-queue"></ol>
+</section>
+
+<footer class="site-footer">
+  <p>Data: Japanese &amp; English Wikipedia “Takako Okamura / 岡村孝子” · tracklists: <a href="https://okamuratakako.com/discography/">official discography</a> · videos: YouTube (official channel preferred, others fall back to YouTube search).</p>
+  <p>Solo career only — Aming era and best-of compilations are out of scope for this version.</p>
+</footer>
+
+<script src="js/player.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
