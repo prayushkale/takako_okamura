@@ -59,7 +59,7 @@ export interface SlideTrack {
   chorusStart: number | null;
 }
 
-export type SlideKind = "single" | "album";
+export type SlideKind = "single" | "album" | "summary";
 
 export interface Slide {
   id: string;
@@ -85,9 +85,31 @@ export interface Slide {
   playableCount: number;
 }
 
+export interface AlbumSummaryRow {
+  n: number | null;
+  title: string;
+  year: number;
+  date: string;
+  oricon: number | null;
+  trackCount: number;
+  hue: number;
+}
+
+export interface DeckSummary {
+  albumCount: number;
+  singleCount: number;
+  trackCount: number;
+  firstYear: number;
+  lastYear: number;
+  spanYears: number;
+  albums: AlbumSummaryRow[];
+  bestAlbum: AlbumSummaryRow | null;
+}
+
 export interface SlidesPayload {
   count: number;
   slides: Slide[];
+  summary: DeckSummary;
 }
 
 const HUES = [348, 20, 42, 150, 200, 225, 265, 300, 320, 12];
@@ -206,7 +228,53 @@ export function buildSlides(years: DiscogYear[]): SlidesPayload {
     };
   });
 
-  return { count: slides.length, slides };
+  const albumSlides = slides.filter((s) => s.kind === "album");
+  const albumRows: AlbumSummaryRow[] = albumSlides.map((a) => ({
+    n: a.num ?? null,
+    title: a.title,
+    year: a.year,
+    date: a.date,
+    oricon: a.oricon,
+    trackCount: a.tracks.length,
+    hue: a.coverHue,
+  }));
+  const firstYear = slides[0]?.year ?? 0;
+  const lastYear = slides[slides.length - 1]?.year ?? 0;
+  const charted = albumRows.filter((a) => a.oricon != null);
+  const summary: DeckSummary = {
+    albumCount: albumRows.length,
+    singleCount: slides.length - albumRows.length,
+    trackCount: albumRows.reduce((n, a) => n + a.trackCount, 0),
+    firstYear,
+    lastYear,
+    spanYears: lastYear >= firstYear ? lastYear - firstYear + 1 : 0,
+    albums: albumRows,
+    bestAlbum: charted.length
+      ? charted.reduce((best, a) => ((a.oricon as number) < (best.oricon as number) ? a : best))
+      : null,
+  };
+
+  slides.push({
+    id: "summary",
+    index: slides.length,
+    kind: "summary",
+    year: lastYear,
+    title: "総括",
+    subtitle: "Complete Discography",
+    date: `${firstYear}–${lastYear}`,
+    oricon: null,
+    coverSeed: "summary",
+    coverHue: 225,
+    youtubeId: null,
+    youtubeEmbed: null,
+    chorusStart: null,
+    watchUrl: "",
+    searchUrl: "",
+    tracks: [],
+    playableCount: 0,
+  });
+
+  return { count: slides.length, slides, summary };
 }
 
 export function initialsOf(title: string): string {

@@ -46,7 +46,6 @@ early or a little late. These are the ones to check by ear first.
 | Hello (original version) | fierte | 0:59 | [▶](https://youtu.be/zCiz9zqhTEk?t=59) | 0.10 |
 | 見返してやるんだわ | 夢の樹 | 1:00 | [▶](https://youtu.be/mGpkMrDHQYk?t=60) | 0.11 |
 | 五月の晴れた空 | liberté | 0:55 | [▶](https://youtu.be/aM5kVopTNhQ?t=55) | 0.11 |
-| Believe | single | 0:58 | [▶](https://youtu.be/i-wZy_k0Q5o?t=58) | 0.11 |
 | 恋の行方 | Chou-fleur | 1:10 | [▶](https://youtu.be/hAnumwhidlQ?t=70) | 0.11 |
 | 夢見る頃を過ぎても | 満天の星 | 1:19 | [▶](https://youtu.be/yM8UFsN4E9Q?t=79) | 0.11 |
 | ハレルヤ | single | 1:06 | [▶](https://youtu.be/AQ5Wmr1ZTVU?t=66) | 0.11 |
@@ -61,6 +60,7 @@ early or a little late. These are the ones to check by ear first.
 | 希望の朝 | Sanctuary | 1:00 | [▶](https://youtu.be/VhGMO8GIejw?t=60) | 0.12 |
 | あなたにめぐりあう旅 | NO RAIN, NO RAINBOW | 1:12 | [▶](https://youtu.be/QPz-JhNkwXM?t=72) | 0.12 |
 | 白い夏 | SOLEIL | 2:27 | [▶](https://youtu.be/Odr7FL8njQo?t=147) | 0.13 |
+| Good-Day 〜思い出に変わるならば〜 | single | 2:17 | [▶](https://youtu.be/tOiWkNeQP5U?t=137) | 0.13 |
 | 満天の星 | 満天の星 | 1:40 | [▶](https://youtu.be/6tOt2ms0vPY?t=100) | 0.13 |
 | Dear friend | SWEET HEARTS | 0:51 | [▶](https://youtu.be/8T4xyAmB79Q?t=51) | 0.13 |
 | 白い夏 (Version 2000) | Reborn | 2:21 | [▶](https://youtu.be/nbNt-Fe0QH0?t=141) | 0.13 |
@@ -83,9 +83,9 @@ early or late entry is easy to spot.
 | 8 | 砕ける波に… | 夢の樹 | 1:09 of 4:58 | [▶](https://youtu.be/KASER47wp9I?t=69) | ssm |
 | 9 | 夢の樹 | 夢の樹 | 1:04 of 3:59 | [▶](https://youtu.be/J9ac2oBy0Bg?t=64) | ssm |
 | 10 | 今日も眠れない | single | 2:26 of 4:29 | [▶](https://youtu.be/ppy_VmQ30H4?t=146) | ssm |
-| 11 | はぐれそうな天使 | single | 1:16 of 4:05 | [▶](https://youtu.be/3yU8AsvRz6U?t=76) | ssm |
+| 11 | はぐれそうな天使 | single | 1:17 of 4:05 | [▶](https://youtu.be/sDe5eiC6lN4?t=77) | ssm |
 | 12 | 夏の日の午後 | single | 1:13 of 4:51 | [▶](https://youtu.be/BbCivwkU8x4?t=73) | ssm |
-| 13 | 見送るわ | 私の中の微風 | 2:50 of 5:08 | [▶](https://youtu.be/qhNoGzcbRE0?t=170) | ssm |
+| 13 | 見送るわ | 私の中の微風 | 1:40 of 5:33 | [▶](https://youtu.be/Ay1MbrTTf5A?t=100) | ssm |
 | 14 | 微風 | 私の中の微風 | 1:28 of 4:42 | [▶](https://youtu.be/2LMFkJTYIWA?t=88) | ssm |
 | 15 | 美辞麗句 | 私の中の微風 | 1:03 of 5:23 | [▶](https://youtu.be/Af1Db9Gur4k?t=63) | ssm |
 | 16 | 夏の日の午後 | 私の中の微風 | 0:42 of 4:59 | [▶](https://youtu.be/c5BAuRKR68g?t=42) | ssm |
@@ -101,7 +101,7 @@ early or late entry is easy to spot.
 | 26 | 秋の日の夕暮れ | liberté | 0:33 of 4:24 | [▶](https://youtu.be/n5Ohw9ofPdQ?t=33) | ssm |
 | 27 | 私はここにいる | liberté | 1:20 of 4:08 | [▶](https://youtu.be/bGezQY0lRFc?t=80) | ssm |
 | 28 | 月が泣いた夜 | liberté | 2:23 of 4:26 | [▶](https://youtu.be/Tq_xS1gk1R8?t=143) | ssm |
-| 29 | Believe | single | 0:58 of 5:20 | [▶](https://youtu.be/i-wZy_k0Q5o?t=58) | ssm |
+| 29 | Believe | single | 2:32 of 5:03 | [▶](https://youtu.be/u8yhvAugoJc?t=152) | ssm |
 | 30 | TODAY | single | 3:51 of 6:22 | [▶](https://youtu.be/w5XYhYgpS60?t=231) | ssm |
 | 31 | クリスマスの夜 | single | 0:50 of 4:54 | [▶](https://youtu.be/c3VeXu-52cI?t=50) | ssm |
 | 32 | ドラマ | SOLEIL | 1:57 of 4:03 | [▶](https://youtu.be/iZUvVDG0hHQ?t=117) | ssm |
@@ -128,7 +128,7 @@ early or late entry is easy to spot.
 | 53 | 青い日々 | Kiss 〜à côté de la mer〜 | 2:33 of 5:49 | [▶](https://youtu.be/ZSw4dsskoXM?t=153) | ssm |
 | 54 | あの海へ今帰りたい 〜a cote de la mar〜 | Kiss 〜à côté de la mer〜 | 2:46 of 5:12 | [▶](https://youtu.be/nVvXFHlcZyE?t=166) | ssm |
 | 55 | adieu | Kiss 〜à côté de la mer〜 | 1:24 of 5:29 | [▶](https://youtu.be/hDLD0NXVBmM?t=84) | ssm |
-| 56 | Good-Day 〜思い出に変わるならば〜 | single | 1:09 of 5:14 | [▶](https://youtu.be/VJsxj00qvIw?t=69) | ssm |
+| 56 | Good-Day 〜思い出に変わるならば〜 | single | 2:17 of 4:59 | [▶](https://youtu.be/tOiWkNeQP5U?t=137) | ssm |
 | 57 | もっと自由に | Chou-fleur | 2:09 of 5:12 | [▶](https://youtu.be/fKouBYDe05c?t=129) | ssm |
 | 58 | 永遠の灯 | Chou-fleur | 1:10 of 5:44 | [▶](https://youtu.be/yukNlc5j3AA?t=70) | ssm |
 | 59 | 愛を急がないで | Chou-fleur | 1:24 of 5:49 | [▶](https://youtu.be/jt_DyhM8LHY?t=84) | ssm |

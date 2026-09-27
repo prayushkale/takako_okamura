@@ -28,6 +28,11 @@ npm run preview
 - **Play a sample** — every slide with a curated `youtubeId` embeds the video inline;
   slides without one show an "Open on YouTube ↗" search fallback
   (`岡村孝子 <title>`).
+- **When a sample can't be embedded** — some uploaders switch off "playback on other
+  websites", and YouTube then refuses to play the video in any embed. The deck catches
+  that refusal and replaces the dead player with an **Embedding disabled** card plus a
+  **Watch on YouTube ↗** link; clicking ▶ again opens YouTube directly. Run
+  `npm run embeds:check` to list every sample in that state.
 - **From chorus (C)** — start every sample at the song's chorus instead of the intro.
   Applies to the big `▶ Play` button and to every track `▶`, and is remembered across
   reloads. Off by default.
@@ -67,6 +72,19 @@ of itself, so the non-square 8cm-CD single sleeves are not cropped.
 2. Copy the 11-character video ID from the URL (`watch?v=XXXXXXXXXXX`).
 3. Paste it as `youtubeId` for that single or album track in `src/data/discography.json`.
 4. Rebuild — the slide embed + "Open on YouTube" link update automatically.
+
+**Check it can be embedded** before committing to an upload:
+
+```sh
+npm run embeds:check                      # every sample in the deck
+npm run embeds:check -- --only ID1,ID2    # just the ones you added
+```
+
+The script asks yt-dlp to play each video as YouTube's embedded client, retries to
+filter out transient failures, and reports the ids that refuse embedding along with the
+releases using them. Swap those for another upload of the same song and re-check —
+one channel (`Peatmarbre Returns`) is what disabled embedding on the samples this deck
+originally used for はぐれそうな天使, 見送るわ, Believe and Good-Day.
 
 ## Starting samples from the chorus
 
@@ -125,14 +143,18 @@ under "Not analysed" in `chorus-review.md` — rerun those with
 - `src/data/chorus.json` — where each song's chorus starts (see above).
 - `scripts/detect-chorus.py` — one-off chorus detector that writes `chorus.json`
   and `chorus-review.md`.
+- `scripts/check-embeds.py` — reports any sample YouTube refuses to embed (see
+  "Adding a YouTube sample").
 - `public/covers/` — drop real jacket art here (`<slide-id>.jpg`).
 - Legacy plain-HTML version (`index.html`, `styles.css`, `js/`, `data/`) is superseded
   by this Astro app and can be deleted.
 
 ## Notes & caveats
 
-- Some 80s/90s uploads may be region-blocked or have embedding disabled — the per-slide
-  YouTube search/open link is always there as backup.
+- Some 80s/90s uploads may be region-blocked or have embedding disabled. Embed-disabled
+  videos are detected as they fail and replaced with a link to YouTube, so a slide never
+  shows a dead player; region-blocked ones still surface the YouTube error inside the
+  player.
 - Browsers block autoplay before user interaction, so samples always start from a click.
 - Out of scope: Aming era (1982–83 待つわ etc.) and best-of compilations
   (After Tone, Ballade, DO MY BEST…).
