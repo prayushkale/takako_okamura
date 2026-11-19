@@ -89,6 +89,10 @@ const { count, slides, summary } = buildSlides((discography as { years: DiscogYe
         </section>
       ))}
     </main>
+
+    <footer class="credit">
+      <a href="https://prayush.dev" rel="noopener">Built by Prayush Kale</a>
+    </footer>
   </div>
 
   <script>
@@ -318,6 +322,17 @@ const { count, slides, summary } = buildSlides((discography as { years: DiscogYe
     padding-bottom: 4px;
   }
   .details :global(.slide) { margin: 0; }
+
+  .credit {
+    flex: 0 0 auto;
+    padding-top: 6px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .credit a { text-decoration: none; }
+  .credit a:hover { color: var(--ink); text-decoration: underline; }
+  .deck:fullscreen .credit { display: none; }
 
   :fullscreen.deck,
   .deck:fullscreen {

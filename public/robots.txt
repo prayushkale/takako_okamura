@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://takako-okamura.prayush.dev/sitemap.xml

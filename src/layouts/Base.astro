@@ -19,6 +19,33 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="canonical" href="https://takako-okamura.prayush.dev/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://takako-okamura.prayush.dev/" />
+    <meta property="og:image" content="https://takako-okamura.prayush.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://takako-okamura.prayush.dev/og-image.png" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        name: title,
+        url: "https://takako-okamura.prayush.dev/",
+        description,
+        image: "https://takako-okamura.prayush.dev/og-image.png",
+        inLanguage: ["ja", "en"],
+        about: { "@type": "Person", name: "Takako Okamura", alternateName: "岡村孝子" },
+        author: { "@type": "Person", name: "Prayush Kale", url: "https://prayush.dev/" },
+      })}
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
